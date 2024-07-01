@@ -1,10 +1,42 @@
-runLuncher:
-  config:
-    K8sRunLuncher:
+dagster-user-deployments:
+  enabled: true
+
+  deployments:
+    - name: "gldas-noah"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "v0.4"
+        pullPolicy: Always
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/gldas_noah/assets.py"
+
+      port: 3030
+
       resources: 
-        requests:
-          cpu: 100m
-          memory: 1Gi
         limits:
           cpu: 1
           memory: 2.5Gi
+        requests:
+          cpu: 100m
+          memory: 1Gi
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+  ingressClassName: nginx
+
+  dagsterWebserver:
+    path: "/"
+    pathType: Prefix
+    host: "${INGRESS_HOST}"
+
+    tls:
+      enabled: false
+      secretName: ""
+
+    precedingPaths: []
+    succeedingPaths: []

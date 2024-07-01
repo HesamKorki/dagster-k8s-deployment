@@ -19,7 +19,6 @@ CHART_VERSION="1.7.12"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 VALUES_FILE="$SCRIPT_DIR/values.yaml"
-INGRESS_FILE="$SCRIPT_DIR/dagster-ingress.yaml"
 
 # Add the Helm repository
 helm repo add dagster $HELM_REPO
@@ -30,14 +29,12 @@ helm repo update
 # Install or upgrade the Dagster release
 
 echo "Upgrading Dagster Helm release..."
-helm upgrade --install $RELEASE_NAME $HELM_CHART \
+
+envsubst < "$VALUES_FILE" | helm upgrade --install $RELEASE_NAME $HELM_CHART \
+--create-namespace \
 --namespace $NAMESPACE \
 --version $CHART_VERSION \
---values $VALUES_FILE
-
-
-echo "Applying the Ingress"
-envsubst < "$INGRESS_FILE" | kubectl apply -f -
+--values -
 
 # Print the status of the release
 helm status $RELEASE_NAME -n $NAMESPACE

@@ -4,9 +4,11 @@ Deployment of Dagster on Kubernetes with exposed UI through Nginx Ingress contro
 
 ## Tools version
 
-Kubectl client version: v1.30.0
-Kubernetes server version: v1.30.0
-Helm client version: v3.15.2
+Kubectl client version: `v1.30.0`
+
+Kubernetes server version: `v1.30.0`
+
+Helm client version: `v3.15.2`
 
 ## Local K8s Cluster
 
@@ -25,12 +27,16 @@ kubectl apply -f nginx-ingress-controller/deploy.yaml
 ## Dagster Deployment
 
 There is a simple script `dagster/upgrade.sh` to upgrade/install the dagster chart and apply the ingress for its UI.
-`./dagster/upgrade.sh arg1 arg2`
+It's also helpful for keeping track of which chart version is in production.
+
+```bash
+./dagster/upgrade.sh arg1 arg2
+
 Args:
     - arg1: namespace to deploy dagster [Default Value: 'default']
     - arg2: hostname for the ingress [Default Value: 'localhost']
 
-
+```
 ```bash
 ./dagster/upgrade.sh default localhost
 ```
