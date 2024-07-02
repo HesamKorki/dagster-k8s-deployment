@@ -1,10 +1,22 @@
 [![Build and Push gldas_noah Deployment Docker Image](https://github.com/HesamKorki/dagster-k8s-deployment/actions/workflows/build-gldas.yaml/badge.svg?branch=main&event=workflow_dispatch)](https://github.com/HesamKorki/dagster-k8s-deployment/actions/workflows/build-gldas.yaml)
 
-# dagster-kube-deployment
-Deployment of Dagster on Kubernetes with exposed UI through Nginx Ingress controller
+# Dagster k8s Deployment
+Deployment of Dagster (with a materialized asset) on Kubernetes with exposed UI through Nginx Ingress controller protected by basic-auth
+
+## Table of Content
+1.  [Required Tools](#required-tools)
+2.  [Local K8s Cluster](#local-k8s-cluster)
+3.  [Nginx Ingress Controller](#nginx-ingress-controller)
+4.  [Dagster Deployment](#dagster-deployment)
+    - [1. Decrypt Secrets](#1-decrypt-secrets)
+    - [2. Call The Script](#2-call-the-script)
+5. [Code Location](#code-location)
+    - [gldas_noah Asset](#gldas_noah-asset)
+6. [CI/CD](#cicd)
 
 
-## Tools version
+
+## Required Tools
 
 Kubectl client version: `v1.30.0`
 
@@ -40,13 +52,14 @@ There is a simple script `dagster/upgrade.sh` to upgrade/install the dagster cha
 It's also helpful for keeping track of which chart version is in production.
 
 ```bash
-./dagster/upgrade.sh arg1 arg2
-
-Args:
-    - arg1: namespace to deploy dagster [Default Value: 'default']
-    - arg2: hostname for the ingress [Default Value: 'localhost']
-
+./dagster/upgrade.sh <namespace> <hostname>
 ```
+
+- **Args**:
+    - `<namespace>`: namespace to deploy dagster [Default: 'default']
+    - `<hostname>`: hostname for the ingress [Default: 'localhost']
+
+
 Default usage:
 ```bash
 ./dagster/upgrade.sh default localhost
@@ -54,13 +67,13 @@ Default usage:
 
 The Dagster Webserver UI should be accessible by heading to [localhost](http://localhost) or the domain given to the script if a DNS is configured for the domain to point to the Ingress Controller Service. 
 
-The UI is protected by nginx basic-auth which is also encrypted in the secrets yaml file.
+The UI is protected by **Nginx Basic Auth** and the credentials are encrypted in the secrets YAML file.
 
 ## Code Location
-Each directory in the `src` is going to be a user deployment in dagster with its own assets and pipelines. Here we just have a single dummy asset to demonstrate. 
+Each directory in the `src` represents a user deployment in Dagster with its own assets and pipelines.
 
 ### gldas_noah Asset
 For demonstration purposes it sleeps for 60 seconds so we can check whether the file has been downloaded successfully in the ephemeral disk space. It also outputs the secrets and the S3 configs so we can verify their sanity.
 
 ### CI/CD
-I also made a simple github action that would test the asset, then build the asset code location and pushes it to docker hub if there is any change in the code location directoy. This is fine for our CI, the CD however, needs another tool like ArgoCD.
+A GitHub Action tests the asset, builds the asset code location, and pushes it to Docker Hub if there are changes in the code location directory. We can use tools like ArgoCD for CD as future improvements.
