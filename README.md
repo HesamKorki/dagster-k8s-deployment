@@ -57,4 +57,4 @@ Each directory in the `src` is going to be a user deployment in dagster with its
 For demonstration purposes it sleeps for 60 seconds so we can check whether the file has been downloaded successfully in the ephemeral disk space. It also outputs the secrets and the S3 configs so we can verify their sanity.
 
 ### CI/CD
-I also made a simple github action that would build the asset code location and pushes it to docker hub if there is any change in the code location directoy. This is fine for our CI, the CD however, needs another tool like ArgoCD.
+I also made a simple github action that would test the asset, then build the asset code location and pushes it to docker hub if there is any change in the code location directoy. This is fine for our CI, the CD however, needs another tool like ArgoCD.
