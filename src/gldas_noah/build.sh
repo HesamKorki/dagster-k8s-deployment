@@ -5,7 +5,7 @@
 # ==========================================================================================
 
 IMAGE_REGISTRY=hesamkorki/dagster-asset
-IMAGE_TAG=v0.4
+IMAGE_TAG=v0.8
 DAGSTER_VERSION=1.7.12
 
 

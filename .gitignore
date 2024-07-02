@@ -1,0 +1,6 @@
+dagster/secrets.yaml
+
+*.pyc
+src/gldas_noah/gldas_noah.egg-info
+src/gldas_noah/dist
+src/gldas_noah/build

@@ -19,11 +19,21 @@ CHART_VERSION="1.7.12"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 VALUES_FILE="$SCRIPT_DIR/values.yaml"
+SECRET_FILE="$SCRIPT_DIR/secrets.yaml"
+
+if [ ! -f "$SECRET_FILE" ]; then
+    echo "Error: File '$SECRET_FILE' not found! Maybe you forgot to decrypt it?"
+    exit 1
+fi
+
+# Ensure the namespace exists
+kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+
+# Create the secrets
+envsubst < "$SECRET_FILE" | kubectl apply -f -
 
 # Add the Helm repository
 helm repo add dagster $HELM_REPO
-
-# Update Helm repositories
 helm repo update
 
 # Install or upgrade the Dagster release
@@ -31,7 +41,6 @@ helm repo update
 echo "Upgrading Dagster Helm release..."
 
 envsubst < "$VALUES_FILE" | helm upgrade --install $RELEASE_NAME $HELM_CHART \
---create-namespace \
 --namespace $NAMESPACE \
 --version $CHART_VERSION \
 --values -

@@ -5,7 +5,7 @@ dagster-user-deployments:
     - name: "gldas-noah"
       image:
         repository: "docker.io/hesamkorki/dagster-asset"
-        tag: "v0.4"
+        tag: "v0.8"
         pullPolicy: Always
 
       dagsterApiGrpcArgs:
@@ -21,6 +21,27 @@ dagster-user-deployments:
         requests:
           cpu: 100m
           memory: 1Gi
+
+      volumes:
+        - name: "gldas-tmp"
+          emptyDir:
+            sizeLimit: "20Gi"
+      
+      volumeMounts:
+        - name: "gldas-tmp"
+          mountPath: "/tmp/gldas"
+      
+      env:
+        - name: GLDAS_S3_BUCKET
+          value: "gldas-noah-bucket"
+
+        - name: GLDAS_S3_REGION
+          value: "eu-west-1"
+      
+      envSecrets:
+        - name: gldas-aws-credentials
+        - name: gldas-data-credentials
+
 
 ingress:
   enabled: true
