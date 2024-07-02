@@ -1,4 +1,4 @@
-[![Build and Push gldas_noah Deployment Docker Image](https://github.com/HesamKorki/dagster-k8s-deployment/actions/workflows/build-gldas.yaml/badge.svg?branch=main)](https://github.com/HesamKorki/dagster-k8s-deployment/actions/workflows/build-gldas.yaml)
+[![Build and Push gldas_noah Deployment Docker Image](https://github.com/HesamKorki/dagster-k8s-deployment/actions/workflows/build-gldas.yaml/badge.svg?branch=main&event=workflow_dispatch)](https://github.com/HesamKorki/dagster-k8s-deployment/actions/workflows/build-gldas.yaml)
 
 # dagster-kube-deployment
 Deployment of Dagster on Kubernetes with exposed UI through Nginx Ingress controller
