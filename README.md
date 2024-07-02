@@ -52,6 +52,10 @@ Default usage:
 ./dagster/upgrade.sh default localhost
 ```
 
+The Dagster Webserver UI should be accessible by heading to [localhost](http://localhost) or the domain given to the script if a DNS is configured for the domain to point to the Ingress Controller Service. 
+
+The UI is protected by nginx basic-auth which is also encrypted in the secrets yaml file.
+
 ## Code Location
 Each directory in the `src` is going to be a user deployment in dagster with its own assets and pipelines. Here we just have a single dummy asset to demonstrate. 
 
