@@ -10,7 +10,7 @@ The lag submission then began to be evident once I tried to materialize an asset
 
 Here is my understanding of the issue and how the dagster components interact captured in a simple diagram:
 
-![Dagster diagnostic diagram showing queue and init phases](docs/img/Dagster-diagram.png)
+![Dagster diagnostic diagram showing queue and init phases](docs/img/Dagster-diag.png)
 
 The Bottleneck: The Code Location Server
 
