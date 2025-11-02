@@ -42,6 +42,135 @@ dagster-user-deployments:
         - name: gldas-aws-credentials
         - name: gldas-data-credentials
 
+    - name: "simple-asset-a10p10k"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "simple01"
+        pullPolicy: Always
+      
+      env:
+        - name: NUM_ASSETS
+          value: "10"
+        - name: NUM_PARTITIONS
+          value: "10000"
+        - name: ASSET_PREFIX
+          value: "a10p10k"
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/dagster_code.py"
+
+      port: 3000
+      
+    - name: "simple-asset-a1p2k"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "simple01"
+        pullPolicy: Always
+      
+      env:
+        - name: NUM_ASSETS
+          value: "1"
+        - name: NUM_PARTITIONS
+          value: "2000"
+        - name: ASSET_PREFIX
+          value: "a1p2k"
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/dagster_code.py"
+
+      port: 3000
+
+    - name: "simple-asset-500"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "simple01"
+        pullPolicy: Always
+      
+      env:
+        - name: NUM_ASSETS
+          value: "500"
+        - name: ASSET_PREFIX
+          value: "500"
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/dagster_code.py"
+
+      port: 3000
+    - name: "simple-asset-2k"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "simple01"
+        pullPolicy: Always
+      
+      env:
+        - name: NUM_ASSETS
+          value: "2000"
+        - name: ASSET_PREFIX
+          value: "2k"
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/dagster_code.py"
+
+      port: 3000
+
+    - name: "simple-asset-10k"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "simple01"
+        pullPolicy: Always
+      
+      env:
+        - name: NUM_ASSETS
+          value: "10000"
+        - name: ASSET_PREFIX
+          value: "10k"
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/dagster_code.py"
+
+      port: 3000
+
+    - name: "simple-asset-5k"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "simple01"
+        pullPolicy: Always
+
+      env:
+        - name: NUM_ASSETS
+          value: "5000"
+        - name: ASSET_PREFIX
+          value: "5k"
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/dagster_code.py"
+
+      port: 3000
+
+    - name: "simple-asset-250"
+      image:
+        repository: "docker.io/hesamkorki/dagster-asset"
+        tag: "simple01"
+        pullPolicy: Always
+
+      env:
+        - name: NUM_ASSETS
+          value: "250"
+        - name: ASSET_PREFIX
+          value: "250"
+
+      dagsterApiGrpcArgs:
+        - "--python-file"
+        - "/app/dagster_code.py"
+
+      port: 3000
+
 
 ingress:
   enabled: true

@@ -15,7 +15,7 @@ INGRESS_HOST=${2:-localhost}
 RELEASE_NAME="dagster"
 HELM_REPO="https://dagster-io.github.io/helm"
 HELM_CHART="dagster/dagster"
-CHART_VERSION="1.7.12" 
+CHART_VERSION="1.11.16" 
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 VALUES_FILE="$SCRIPT_DIR/values.yaml"
@@ -43,9 +43,9 @@ echo "Upgrading Dagster Helm release..."
 envsubst < "$VALUES_FILE" | helm upgrade --install $RELEASE_NAME $HELM_CHART \
 --namespace $NAMESPACE \
 --version $CHART_VERSION \
---values -
+--values - 
 
-# Print the status of the release
-helm status $RELEASE_NAME -n $NAMESPACE
-
-
+echo -e "\n\033[1;44m───────────────────────────────────────────────────────────────\033[0m"
+echo -e "\033[1;44m  🚀  Visit http://localhost to access Dagster UI              \033[0m"
+echo -e "\033[1;44m  ✅  No port-forwarding needed once pods are running!         \033[0m"
+echo -e "\033[1;44m───────────────────────────────────────────────────────────────\033[0m\n"

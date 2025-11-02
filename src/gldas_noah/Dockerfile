@@ -1,18 +1,13 @@
 FROM python:3.11-slim
 
-ARG DAGSTER_VERSION
+# Install uv for fast dependency management
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-RUN pip install -U uv
-RUN python -m uv pip install \
-    dagster==${DAGSTER_VERSION} \
-    dagster-postgres \
-    dagster-aws \
-    dagster-k8s \
-    dagster-celery[flower,redis,kubernetes] \
-    dagster-celery-k8s
+# Copy dependency files
+COPY pyproject.toml .
 
+# Install dependencies using uv
+RUN uv pip install --system --no-cache -r pyproject.toml
 
 WORKDIR /app
 COPY . /app
-
-RUN python -m uv pip install -e ".[dev]"

@@ -58,4 +58,4 @@ jobs:
             org.opencontainers.image.revision=${{ env.GIT_COMMIT_HASH }}
             org.opencontainers.image.source=${{ github.repository }}
           build-args: |
-            DAGSTER_VERSION=1.7.12
+            DAGSTER_VERSION=1.11.16

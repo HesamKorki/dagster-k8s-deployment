@@ -1,10 +1,10 @@
 [project]
-name = "gldas_noah_assets"
+name = "dagster-huge-assets"
 version = "0.1.0"
-description = "A simple Dagster code location for testing performance with dummy asset"
+description = "A simple Dagster code location for testing performance with large numbers of assets"
 requires-python = ">=3.11"
 dependencies = [
-    "dagster",
+    "dagster>=1.8.9",
     "dagster-webserver>=1.8.9",
     "dagster-postgres>=0.24.9",
     "dagster-docker>=0.24.9",
@@ -15,10 +15,10 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.uv]
-dev-dependencies = [
-    "pytest"
-]
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+only-include = ["dagster_code.py"]
 
-[tool.dagster]
-module_name = "gldas_noah"
+[tool.uv]
+dev-dependencies = []
+
